@@ -103,7 +103,7 @@ def create_random_genomes(genomes, max_cn=5, af=0.5):
         cn_freqs.append(cn_freq)
     # Initialize population size, using observed frequencies of each
     # copy number in the sequence data.
-    init = 500000
+    init = 1000
     pop_sizes = [int(round(init * x)) for x in cn_freqs]
     population = []
     # Initialize each genome in the population as a list 
@@ -123,20 +123,19 @@ def create_random_genomes(genomes, max_cn=5, af=0.5):
         i = random.randint(0, len(population) - 1)
         ii = random.randint(0, len(population[i]) - 1)
         probability = random.random()
-        if probability < af and population[i][ii] == 0:
+        if probability < af:
             population[i][ii] = 1
-            x += 1
+            x = sum([sum(x) for x in population])
     return population 
 
 def extract_genomes(bam, refseq, chromosome='gi|335317|gb|M35027.1|VACCG', 
-                            left_coord=30300, right_coord=30800, gene_strand='-',
+                            left_coord=30300, right_coord=30800,
                             af=0.05, pos=30489, slop=150, allele_filter=None):
     """
     Identify the presence or absence of a variant site in every alignment 
     within all query sequences.
     """
     allele_dict = defaultdict(list)
-    strand_dict = defaultdict(list)
     sa_tags = defaultdict(int)
     # Create a dictionary of the starts and ends of each alignment from each query sequence.
     coordinate_dict = create_coordinate_dict(bam, chromosome, left_coord, right_coord)
@@ -181,10 +180,6 @@ def extract_genomes(bam, refseq, chromosome='gi|335317|gb|M35027.1|VACCG',
             if q_pos is not None:
                 read_base = q_seq[q_pos]
             else: read_base = '-'
-            # Get the strandedness of the alignment (and thus, the query).
-            if pileupread.alignment.is_reverse: strand = '-'
-            else: strand = "+"
-            strand_dict[q_name].append(strand)
             # Double check that the alignment's parent query sequence is in our
             # dictionary of every query's coordinates. We'll be checking that the
             # terminal ends of the query map uniquely outside of the region later.
@@ -212,11 +207,12 @@ def extract_genomes(bam, refseq, chromosome='gi|335317|gb|M35027.1|VACCG',
     for genome in allele_dict:
         # Sort each query's set of alignments by each alignment's clipping value.
         # A larger clipping value indicates that the alignment is "later" in a query.
-        # Since K3L is on the negative strand, we want to reverse sort by clipping value.
+        # Ultimately, we want to sort with respect to the reference genome.
         all_clips = [x[1] for x in allele_dict[genome]]
         contains_bad_clip = any([x == '-' for x in all_clips])
         if contains_bad_clip: continue
-        ordered_genome = sorted(allele_dict[genome], key=lambda tup: tup[1], reverse=True)
+        # Sort clip values w/r/t the reference.
+        ordered_genome = sorted(allele_dict[genome], key=lambda tup: tup[1])
         ordered_alleles = [x[0] for x in ordered_genome]
         # Check that we haven't catalogued more copies than there are SA.
         if len(ordered_alleles) > sa_tags[genome]: continue

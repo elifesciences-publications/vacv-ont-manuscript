@@ -40,7 +40,9 @@ def run(args):
     # copy number of interest.
     for cn in range(args.cn1, args.cn2 + 1):
         idx = cn - args.cn1
-        cn_props = [all_cn_proportions[bam][idx] for bam in all_cn_proportions]
+        cn_props = [(all_cn_proportions[bam][idx], int(bam.split('.')[0].split('p')[-1])) for bam in all_cn_proportions]
+        cn_props = sorted(cn_props, key=lambda x: x[1])
+        cn_props = [x[0] for x in cn_props]
         label = "CN {}".format(cn)
         color = cs[cn - args.cn1]
         plt.bar(ind, cn_props, width, bottom=running_total, 

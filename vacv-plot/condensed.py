@@ -54,6 +54,7 @@ def run(args):
         m = np.array(matrix)
         # Total number of genomes with the specified copy number.
         total_genomes = float(m.shape[0])
+        print cn, total_genomes
         # Among all genomes of the given copy number, how many H47R alleles 
         # are observed in the first copy, second copy, etc.? 
         h47r_copies = np.sum(m, axis=0)

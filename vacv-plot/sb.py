@@ -23,14 +23,12 @@ def run(args):
         sample_name = bam
         # Extract the full set of VACV genomes and allele combinations 
         # in the population.
-        data = extract_genomes(bam, refseq, allele_filter='hard')
-        genomes, af = data.genomes, data.af
+        genomes = extract_genomes(bam, refseq, allele_filter='hard').genomes
+        vals, af = get_vals(genomes, args.cn)
         # Generate random population of genomes if specified.
         if args.rand:
             rand_genomes = create_random_genomes(genomes, max_cn=args.cn, af=af)
-            vals = get_vals(rand_genomes, args.cn)
-        else:
-            vals = get_vals(genomes, args.cn)
+            vals, af = get_vals(rand_genomes, args.cn)
         allele_combos[sample_name] = vals
 
     # Generating a standalone figure legend.
@@ -94,7 +92,7 @@ def count(genomes, cn):
         # "mixed" -- requires genome to be longer than 1 copy
         elif len(set(genome)) > 1 and all([i in (0, 1) for i in genome]):
             mixed += 1
-    return all_wt, mixed, all_mut
+    return all_wt, mixed, all_mut 
 
 def get_vals(genomes, max_cn):
     """
@@ -115,7 +113,8 @@ def get_vals(genomes, max_cn):
         # of the given copy number.
         combo_list = [x / float(len(genomes)) for x in combo_list]
         combo_lists.append((cn, combo_list))
-    return combo_lists
+    true_af = float(sum([sum(g) for g in genomes])) / sum([len(g) for g in genomes])
+    return combo_lists, true_af
 
 def main(argv):
     import argparse
