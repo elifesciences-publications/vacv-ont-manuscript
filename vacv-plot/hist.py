@@ -52,9 +52,9 @@ def run(args):
         running_total = map(add, running_total, cn_props)
     # If the proportion of genomes in the specified range of copy numbers
     # doesn't add to 1, fill in the rest of the stacked bar plot.
-    if any([x < 1.0 for x in running_total]):
+    if args.cn2 == 5 and any([x < 1.0 for x in running_total]):
         remaining_proportions = [1.0 - x for x in running_total]
-        label = "CN > {}".format(args.cn2 + 1)
+        label = "CN {}+".format(args.cn2)
         color = cs[args.cn2 + 1 - args.cn1]
         plt.bar(ind, remaining_proportions, width, bottom=running_total, 
                 label=label, color=color, lw=0.25, edgecolor='w')
@@ -62,6 +62,7 @@ def run(args):
     plt.xlabel('Passage')
     plt.legend()
     ax.set_xticks(ind)
+    ax.set_xticklabels(sorted([int(bam.split('.')[0].split('p')[-1]) for bam in all_cn_proportions]))
     sns.despine()
     if args.png:
         plt.savefig(args.o + '.png', format='png', bbox_inches='tight')
