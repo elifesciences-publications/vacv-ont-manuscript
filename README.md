@@ -2,6 +2,9 @@
 
 Python code used to characterize copy number and single nucleotide variation in an evolving population of vaccinia virus.
 
+This code is archived on Zenodo. [![DOI](https://zenodo.org/badge/116744275.svg)](https://zenodo.org/badge/latestdoi/116744275)
+
+
 ### Dependencies
 
 `python 2.7`
