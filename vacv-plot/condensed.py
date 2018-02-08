@@ -40,7 +40,8 @@ def run(args):
 
     refseq = get_refseq(args.ref)        
     data = extract_genomes(args.bam, refseq, allele_filter='hard')
-    genomes, af = data.genomes, data.af
+    genomes = data.genomes
+    af = float(sum([sum(g) for g in genomes])) / sum([len(g) for g in genomes])
     # Create a population with uniformly distributed H47R alleles if specified.
     if args.rand:
         genomes = create_random_genomes(genomes, max_cn=args.cn, af=af)
