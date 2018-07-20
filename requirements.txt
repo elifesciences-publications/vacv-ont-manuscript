@@ -1,4 +1,0 @@
-pysam
-pyfaidx
-numpy
-seaborn
