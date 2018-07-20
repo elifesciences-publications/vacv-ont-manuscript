@@ -28,17 +28,19 @@ cd vacv-ont-manuscript
 To get information about the arguments passed into a particular script, simply run:
 
 ```
-$ python $script.py -h
+$ python script.py -h
 ```
 
 Scripts produce various plots and summary statistics, as described below:
 
 ```
 scripts:
-summary.py       : text summary of ONT data
-condensed.py     : linked boxes representing allele frequencies within copies
-hist.py          : stacked bars representing copy number distributions
-sb.py            : stacked bars representing frequencies of allele combinations
+summary.py                      : text summary of ONT data
+condensed.py                    : linked boxes representing allele frequencies within copies
+hist.py                         : stacked bars representing copy number distributions
+sb.py                           : stacked bars representing frequencies of allele combinations
+array_combinations.py           : proportions of all K3L allele combinations in multicopy arrays
+simulate_sequencing_errors.py   : distribute chemistry-specific sequencing errors throughout multicopy arrays
 ```
 
 ### Reproducing figures
