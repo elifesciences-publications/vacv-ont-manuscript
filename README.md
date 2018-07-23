@@ -59,11 +59,17 @@ More details regarding each subcommand are given below, but commands for reprodu
 
 **Figure 2C**: `python hist.py --ref $REF --bams p5.bam p6.bam p7.bam p10.bam p15.bam p20.bam`
 
+**Figure 2-figure supplement 3**: `python hist.py --ref $REF --bams p10.bam p15.bam p20.bam -cn1 6 -cn2 15`
+
 **Figure 3**: `python sb.py --ref $REF --bams p5.bam p6.bam p7.bam p10.bam p15.bam p20.bam`
 
-**Figure 3-figure supplement 2**: `python simulate_sequencing_errors.py --ref $REF --bam p15.r7.bam --chemistry r7` (repeat for p15.bam and p15.MOI.0.1.bam, which were sequenced with R9 and R9.4 chemistries, respectively)
+**Figure 3-figure supplement 1**: `python sb.py --ref $REF --bams p10.bam p15.bam p20.bam -rand`
 
-**Figure 3-figure supplement 3**: `python array_combinations.py --ref $REF --bams p10.bam p15.bam p20.bam -cn 3` 
+**Figure 3-figure supplement 2**: `python sb.py --ref $REF --bams p15.r7.bam p15.bam p15.MOI.0.1.bam`
+
+**Figure 3-figure supplement 3**: `python simulate_sequencing_errors.py --ref $REF --bam p15.r7.bam --chemistry r7` (repeat for p15.bam and p15.MOI.0.1.bam, which were sequenced with R9 and R9.4 chemistries, respectively)
+
+**Figure 3-figure supplement 4**: `python array_combinations.py --ref $REF --bams p10.bam p15.bam p20.bam -cn 3` 
 
 **Figure 4A**: `python condensed.py --ref $REF --bam p5.bam` (repeat for p10, p15, and p20 BAM files)
 
