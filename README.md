@@ -45,7 +45,7 @@ simulate_sequencing_errors.py   : distribute chemistry-specific sequencing error
 
 ### Reproducing figures
 
-To reproduce figures in the manuscript that were generated from ONT sequencing data, first download relevant ONT FASTQ files from the SRA (accession SRP128569) or from [Zenodo](DOI:10.5281/zenodo.1169394).
+To reproduce figures in the manuscript that were generated from ONT sequencing data, first download relevant ONT FASTQ files from the SRA (accession SRP128569) or from Zenodo (DOI:10.5281/zenodo.1319732).
 
 Then, align FASTQ using BWA-MEM. For example:
 
@@ -53,7 +53,7 @@ Then, align FASTQ using BWA-MEM. For example:
 bwa mem -x ont2d -t $THREADS $REF $FASTQ | sambamba view -S -f bam /dev/stdin | sambamba sort -o $OUT.BAM /dev/stdin
 ```
 
-Alternatively, download BAM files (aligned using the above command) from [Zenodo](DOI:10.5281/zenodo.1169394).
+Alternatively, download BAM files (aligned using the above command) from the SRA (SRP128569) or Zenodo.
 
 More details regarding each subcommand are given below, but commands for reproducing figures are as follows.
 
@@ -65,7 +65,9 @@ More details regarding each subcommand are given below, but commands for reprodu
 
 **Figure 3-figure supplement 3**: `python array_combinations.py --ref $REF --bams p10.bam p15.bam p20.bam -cn 3` 
 
-**Figure 4**: `python condensed.py --ref $REF --bam p5.bam` (repeat for p10, p15, and p20 BAM files)
+**Figure 4A**: `python condensed.py --ref $REF --bam p5.bam` (repeat for p10, p15, and p20 BAM files)
+
+**Figure 4B**: `python condensed.py --ref $REF --bam p15.bam -mixed_only`
 
 **Figure 6**: `python sb.py --ref $REF --bams p15.MOI.1.bam p15.MOI.0.1.bam p15.MOI.0.01.bam p15.MOI.0.001.bam`
 
