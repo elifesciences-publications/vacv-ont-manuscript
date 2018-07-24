@@ -118,8 +118,8 @@ def create_random_arrays(arrays, max_cn=5, af=0.5):
     # of the mutation in the experimental population
     random.shuffle(population)
     for array in population:
-        if x > limit: break
         for idx, copy in enumerate(array):
+            if x > limit: break
             probability = random.random()
             if probability < af:
                 array[idx] = 1
@@ -223,8 +223,6 @@ def extract_arrays(bam, refseq, chromosome='gi|335317|gb|M35027.1|VACCG',
         elif copy_filter == 'soft' and any([copy in ('short', 'low_qual') for copy in ordered_array]):
             continue
         elif copy_filter == 'none': pass
-
         sorted_arrays.append(ordered_array)
-
     results = namedtuple('Results', ['arrays', 'af', 'ref', 'alt', 'depth'])
     return results(sorted_arrays, af, ref_base, alt_base, depth)
