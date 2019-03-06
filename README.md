@@ -1,3 +1,8 @@
+
+
+### This code is associated with the paper from Sasani et al., "Long read sequencing reveals poxvirus evolution through rapid homogenization of gene arrays". eLife, 2018. http://dx.doi.org/10.7554/eLife.35453
+
+
 ## Scripts for: Long read sequencing reveals poxvirus evolution through rapid homogenization of gene arrays
 
 Python code used to characterize copy number and single nucleotide variation in an evolving population of vaccinia virus.
